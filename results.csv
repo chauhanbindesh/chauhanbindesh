@@ -1,0 +1,5 @@
+CustomerID,Genre,Age,Annual_Income_(k$),Spending_Score,subscription
+1,Male,19,15,39,False
+2,Male,21,15,81,False
+3,Female,20,16,6,True
+4,Female,23,16,77,True

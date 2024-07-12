@@ -1,0 +1,169 @@
+{
+	"jobConfig": {
+		"name": "bindesh",
+		"description": "",
+		"role": "arn:aws:iam::637423367426:role/aws-glue",
+		"command": "glueetl",
+		"version": "4.0",
+		"runtime": null,
+		"workerType": "G.1X",
+		"numberOfWorkers": 10,
+		"maxCapacity": 10,
+		"maxRetries": 0,
+		"timeout": 2880,
+		"maxConcurrentRuns": 1,
+		"security": "none",
+		"scriptName": "bindesh.py",
+		"scriptLocation": "s3://aws-glue-assets-637423367426-ap-southeast-2/scripts/",
+		"language": "python-3",
+		"spark": true,
+		"sparkConfiguration": "standard",
+		"jobParameters": [],
+		"tags": [],
+		"jobMode": "VISUAL_MODE",
+		"createdOn": "2024-07-12T16:49:30.988Z",
+		"developerMode": false,
+		"connectionsList": [],
+		"temporaryDirectory": "s3://aws-glue-assets-637423367426-ap-southeast-2/temporary/",
+		"logging": true,
+		"glueHiveMetastore": true,
+		"etlAutoTuning": false,
+		"metrics": true,
+		"observabilityMetrics": true,
+		"bookmark": "job-bookmark-disable",
+		"sparkPath": "s3://aws-glue-assets-637423367426-ap-southeast-2/sparkHistoryLogs/",
+		"flexExecution": false,
+		"minFlexWorkers": null,
+		"maintenanceWindow": null
+	},
+	"dag": {
+		"node-1720802620407": {
+			"nodeId": "node-1720802620407",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1720802514661"
+			],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1720802620407",
+			"classification": "DataSink",
+			"type": "S3",
+			"streamingBatchInterval": 100,
+			"format": "glueparquet",
+			"compression": "snappy",
+			"path": "s3://aws-glue-bindesh/data-store/customer_data/data_partition/csv_partition reports/",
+			"partitionKeys": [
+				"age",
+				"genre"
+			],
+			"schemaChangePolicy": {
+				"enableUpdateCatalog": false,
+				"updateBehavior": "UPDATE_IN_DATABASE",
+				"database": "customer_data",
+				"table": null
+			},
+			"updateCatalogOptions": "none",
+			"autoDataQuality": {
+				"isEnabled": false,
+				"evaluationContext": null
+			},
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1720802514661": {
+			"nodeId": "node-1720802514661",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [],
+			"name": "AWS Glue Data Catalog",
+			"generatedNodeName": "AWSGlueDataCatalog_node1720802514661",
+			"classification": "DataSource",
+			"type": "Catalog",
+			"isCatalog": true,
+			"database": "customer_data",
+			"table": "csv_partition_reports",
+			"calculatedType": "",
+			"runtimeParameters": [],
+			"codeGenVersion": 2
+		},
+		"node-1720802557174": {
+			"nodeId": "node-1720802557174",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1720802514661"
+			],
+			"name": "Change Schema",
+			"generatedNodeName": "ChangeSchema_node1720802557174",
+			"classification": "Transform",
+			"type": "ApplyMapping",
+			"mapping": [
+				{
+					"toKey": "customerid",
+					"fromPath": [
+						"customerid"
+					],
+					"toType": "long",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "genre",
+					"fromPath": [
+						"genre"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "age",
+					"fromPath": [
+						"age"
+					],
+					"toType": "long",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "annual_income_(k$)",
+					"fromPath": [
+						"annual_income_(k$)"
+					],
+					"toType": "long",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "spending_score",
+					"fromPath": [
+						"spending_score"
+					],
+					"toType": "long",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "subscription",
+					"fromPath": [
+						"subscription"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": false,
+					"children": null
+				}
+			],
+			"parentsValid": true,
+			"calculatedType": "",
+			"codeGenVersion": 2
+		}
+	},
+	"hasBeenSaved": false,
+	"usageProfileName": null
+}
